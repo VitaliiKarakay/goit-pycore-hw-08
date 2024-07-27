@@ -24,5 +24,8 @@ class Record:
     def find_phone(self, phone):
         return any(p.value == phone for p in self.phones)
 
+    def add_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
+
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"

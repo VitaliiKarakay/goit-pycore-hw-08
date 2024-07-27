@@ -18,4 +18,3 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
-
