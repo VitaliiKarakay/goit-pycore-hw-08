@@ -1,3 +1,6 @@
+from src.utils.exceptions import InvalidPhoneNumberLengthError
+
+
 def input_error(func):
     def inner(*args, **kwargs):
         try:
@@ -8,5 +11,7 @@ def input_error(func):
             return "Give me name and phone please."
         except KeyError:
             return "This contact does not exist."
+        except InvalidPhoneNumberLengthError:
+            return "Phone number must be 10 digits long."
 
     return inner

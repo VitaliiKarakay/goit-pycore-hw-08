@@ -1,4 +1,5 @@
-from src.bot.commands import change_phone_by_name, get_phone_by_name, add_contact, print_commands
+from src.bot.commands import change_phone_by_name, get_phone_by_name, add_contact, print_commands, add_birthday, \
+    show_birthday, birthdays
 
 
 def handle_close(args, contacts):
@@ -34,6 +35,20 @@ def handle_invalid_command(args, contacts):
     print("Invalid command.")
 
 
+def handle_add_birthday(args, contacts):
+    print(add_birthday(args, contacts))
+
+
+def handle_show_birthday(args, contacts):
+    print(show_birthday(args, contacts))
+
+
+def handle_birthdays(args, contacts):
+    upcoming_birthdays = birthdays(args, contacts)
+    for birthday in upcoming_birthdays:
+        print(f"{birthday['name']}'s birthday is on {birthday['congratulation_date']}")
+
+
 command_handlers = {
     "close": handle_close,
     "exit": handle_close,
@@ -42,5 +57,8 @@ command_handlers = {
     "add": handle_add,
     "phone": handle_phone,
     "all": handle_all,
-    "change": handle_change
+    "change": handle_change,
+    "add-birthday": handle_add_birthday,
+    "show-birthday": handle_show_birthday,
+    "birthdays": handle_birthdays
 }

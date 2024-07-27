@@ -4,10 +4,10 @@ from src.address_book.phone import Phone
 
 
 class Record:
-    def __init__(self, name, birthday):
+    def __init__(self, name):
         self.name = Name(name)
         self.phones = []
-        self.birthday = Birthday(birthday)
+        self.birthday = None
 
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
@@ -24,7 +24,7 @@ class Record:
     def find_phone(self, phone):
         return any(p.value == phone for p in self.phones)
 
-    def add_birthday(self, birthday):
+    def add_birth(self, birthday):
         self.birthday = Birthday(birthday)
 
     def __str__(self):
