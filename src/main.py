@@ -1,5 +1,4 @@
 from src.address_book.address_book import AddressBook
-from src.address_book.record import Record
 from src.bot.commands import parse_input
 from src.bot.handlers import handle_invalid_command, command_handlers
 
