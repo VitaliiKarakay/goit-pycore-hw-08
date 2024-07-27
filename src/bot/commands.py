@@ -1,4 +1,5 @@
 import utils.constants
+from src.address_book.address_book import AddressBook
 from src.address_book.record import Record
 from src.bot.decorator import input_error
 from src.utils.exceptions import InvalidPhoneNumberLengthError
@@ -7,11 +8,18 @@ from src.utils.exceptions import InvalidPhoneNumberLengthError
 @input_error
 def change_phone_by_name(args, contacts):
     name = str.capitalize(args[0])
+    old_phone = args[1]
+    new_phone = args[2]
     if name not in contacts:
-        raise KeyError
-    new_phone = args[1]
-    contacts[name] = new_phone
-    return f"{name} phone number changed to {new_phone}."
+        raise KeyError(f"Contact {name} not found.")
+    if len(new_phone) != 10:
+        raise InvalidPhoneNumberLengthError
+    record = contacts[name]
+    if record.find_phone(old_phone):
+        record.edit_phone(old_phone, new_phone)
+        return f"{name}'s phone number changed from {old_phone} to {new_phone}."
+    else:
+        return f"{name} does not have the phone number {old_phone}."
 
 
 @input_error
@@ -28,15 +36,19 @@ def parse_input(user_input):
 
 
 @input_error
-def add_contact(args, contacts):
-    name, phone = args
+def add_contact(args, book: AddressBook):
+    name, phone, *_ = args
     name = name.strip().capitalize()
     if len(phone) != 10:
         raise InvalidPhoneNumberLengthError
-    record = Record(name)
+    record = book.find(name)
+    message = "Contact updated."
+    if record is None:
+        record = Record(name)
+        book.add_record(record)
+        message = "Contact added."
     record.add_phone(phone)
-    contacts.add_record(record)
-    return "Contact added."
+    return message
 
 
 @input_error
