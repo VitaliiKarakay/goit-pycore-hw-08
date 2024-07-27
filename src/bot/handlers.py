@@ -24,7 +24,10 @@ def handle_phone(args, contacts):
 
 
 def handle_all(args, contacts):
-    print(contacts)
+    for name, record in contacts.items():
+        phones = ', '.join(phone.value for phone in record.phones)
+        birthday = record.birthday.value.strftime('%d.%m.%Y') if record.birthday else 'No birthday set'
+        print(f"Name: {name}, Phones: {phones}, Birthday: {birthday}")
 
 
 def handle_change(args, contacts):
